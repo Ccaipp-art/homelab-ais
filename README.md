@@ -17,6 +17,7 @@ Ce dépôt présente un **laboratoire d'infrastructure que j'ai construit chez m
 - **VM Ubuntu Server 24.04** : serveur principal (DNS, Nginx, supervision, durcissement)
 - **VM Rocky Linux 9** : client type entreprise (RHEL-like, SELinux, Firewalld, tests)
 
+A faire
 ![Schéma d'architecture](diagrams/architecture-homelab.png)
 
 ## 🎯 Objectifs pédagogiques
@@ -45,8 +46,8 @@ est disponible sur Notion :
 
 ## 🚧 État d'avancement
 
-- [x] Création des 3 VM
-- [x] SSH + clés
+- [ ] Création des 3 VM
+- [ ] SSH + clés
 - [ ] DNS interne
 - [ ] Nginx + reverse proxy
 - [ ] Prometheus + Grafana
