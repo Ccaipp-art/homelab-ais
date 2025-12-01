@@ -1,0 +1,231 @@
+# ✅ **TO-DO LIST – Phase 3 : Création des VMs de ton Infrastructure**
+
+---
+
+# 🧱 **A. VM Ubuntu Server 24.04 – Serveur principal du lab**
+
+## 🎯 Objectif
+
+Installer un serveur Linux stable, minimaliste, sécurisé, qui servira de **cœur d’infrastructure**.
+
+---
+
+## ✔️ A1 — Préparation
+
+* [ ] Télécharger ISO Ubuntu **Server** 24.04 LTS
+  → version *server*, pas desktop
+* [ ] Vérifier l’intégrité du fichier (optionnel mais pro)
+* [ ] Créer un dossier dédié sur ton disque externe :
+  `E:\VMware\Ubuntu-Server`
+
+---
+
+## ✔️ A2 — Création VM dans VMware Player
+
+* [ ] Créer une nouvelle VM : Ubuntu 64-bit
+* [ ] RAM : **2 Go** (ou 4 si confortable)
+* [ ] CPU : **2 vCPU**
+* [ ] Disque : **20 à 40 Go**
+* [ ] Type : “Store as a single file”
+* [ ] Réseau : **NAT** (ou Bridge selon besoins)
+* [ ] Désactiver l'accélération 3D (inutile sur un serveur)
+
+---
+
+## ✔️ A3 — Installation Ubuntu Server
+
+* [ ] Langue : Français
+* [ ] Installation minimale
+* [ ] Partitionnement automatique
+* [ ] Désactiver l’envoi de stats → **oui**
+* [ ] Installer OpenSSH Server → **oui**
+* [ ] Utiliser le login *brice* ou *admin*
+* [ ] Pas d’installation de snaps / services web pour l’instant
+
+---
+
+## ✔️ A4 — Post-installation serveur
+
+* [ ] Mettre le système à jour :
+
+  ```bash
+  sudo apt update && sudo apt full-upgrade -y
+  ```
+* [ ] Installer outils de base :
+
+  ```bash
+  sudo apt install -y htop net-tools ufw curl wget git neofetch
+  ```
+* [ ] Activer SSH (il doit déjà être installé)
+* [ ] Vérifier l’adresse IP du serveur :
+
+  ```bash
+  ip a
+  ```
+
+---
+
+## ✔️ A5 — Sécurisation minimale
+
+* [ ] Activer UFW :
+
+  ```bash
+  sudo ufw allow OpenSSH
+  sudo ufw enable
+  ```
+* [ ] Vérifier :
+
+  ```bash
+  sudo ufw status
+  ```
+
+---
+
+## ✔️ A6 — Connexion Desktop → Server
+
+Sur ton **Ubuntu Desktop** :
+
+* [ ] Tester SSH :
+
+  ```bash
+  ssh brice@IP_DU_SERVEUR
+  ```
+* [ ] Ajouter la clé SSH Desktop → Server (optionnel à ce stade)
+
+---
+
+## ✔️ A7 — Snapshot manuel
+
+* [ ] Éteindre la VM
+* [ ] Copies du dossier dans `Ubuntu-Server-baseline`
+
+---
+
+### 📌 Résultat attendu (fin de section A)
+
+Tu as un **serveur Ubuntu 24.04 fonctionnel**, sécurisé, accessible en SSH, prêt à recevoir :
+
+* DNS
+* Nginx
+* Reverse proxy
+* Monitoring
+* Ansible (serveur de contrôle ou cible)
+* Hardening
+* Services réseau du lab
+
+---
+
+# 🧱 **B. VM Rocky Linux 9 – Client entreprise (RHEL-like)**
+
+## 🎯 Objectif
+
+Avoir un poste Linux “entreprise” simulant un environnement **Red Hat**, pour :
+
+* tests d’Ansible
+* gestion utilisateurs & services
+* tests réseau entre OS différents
+* compatibilité SELinux
+* pratiques sysadmin RHEL
+
+---
+
+## ✔️ B1 — Préparation
+
+* [ ] Télécharger ISO Rocky Linux 9 (minimal)
+* [ ] Créer dossier `E:\VMware\Rocky-Linux`
+
+---
+
+## ✔️ B2 — Création VM dans VMware
+
+* [ ] OS : Linux → **Red Hat 64-bit**
+* [ ] RAM : **2 Go**
+* [ ] CPU : **1 vCPU** ou 2
+* [ ] Disque : **20 Go**
+* [ ] NAT ou Host-only selon tes besoins réseau
+* [ ] Pas d’accélération 3D
+
+---
+
+## ✔️ B3 — Installation Rocky Linux
+
+* [ ] Installation “Minimal Install”
+* [ ] Clavier / langue FR
+* [ ] Partitionnement auto
+* [ ] Création user `brice` ou `rocky`
+* [ ] Activation réseau
+* [ ] Activer SSH server pendant l’install (ou après)
+
+---
+
+## ✔️ B4 — Post-installation
+
+* [ ] Mise à jour :
+
+  ```bash
+  sudo dnf update -y
+  ```
+* [ ] Installation outils :
+
+  ```bash
+  sudo dnf install -y htop git net-tools nmap bind-utils
+  ```
+* [ ] Vérifier l’IP :
+
+  ```bash
+  ip a
+  ```
+
+---
+
+## ✔️ B5 — SSH Desktop → Rocky
+
+Depuis Ubuntu Desktop :
+
+```bash
+ssh brice@IP_ROCKY
+```
+
+---
+
+## ✔️ B6 — Snapshot manuel
+
+* [ ] Éteindre
+* [ ] Copier dossier dans `Rocky-baseline`
+
+---
+
+### 📌 Résultat attendu (fin de section B)
+
+Tu disposes d’un **client RHEL-like** pour tester :
+
+* commandes sysadmin entreprise
+* services Rocky
+* SELinux
+* scénarios Ansible multi-OS
+* comportements réseau différents
+
+---
+
+# 🎯 **Synthèse du To-Do**
+
+Tu vas créer :
+
+### ✔️ Un serveur Ubuntu 24.04 :
+
+* cœur de ton lab
+* services réseau
+* durcissement
+* supervision
+* administration
+* VLAN / firewall / HTTP / DNS
+
+### ✔️ Un client Rocky 9 :
+
+* machine “entreprise”
+* comportement RHEL
+* tests Ansible multi-OS
+* scénarios d’authentification
+* pratiques sysadmin avancées
+
+---
