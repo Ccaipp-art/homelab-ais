@@ -28,7 +28,7 @@ Je suis en formation **Administrateur Infrastructures Sécurisées** et je const
 
 * renforcer mes compétences Linux (Ubuntu et Rocky Linux)
 * pratiquer le durcissement système et les services réseau
-* apprendre et approfondir l’automatisation (Ansible)
+* renforcer et approfondir l’automatisation (Ansible)
 * mettre en place de la supervision (Prometheus + Grafana)
 * documenter ma montée en compétence de manière professionnelle
 * me préparer à une **alternance en administration système** à partir d’avril 2026
