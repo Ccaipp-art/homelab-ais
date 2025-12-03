@@ -1,16 +1,5 @@
 # Homelab AIS — Ubuntu & Rocky • Automation & Security
 
-```text
-██╗  ██╗ ██████╗ ███╗   ███╗███████╗██╗      █████╗ ██████╗
-██║  ██║██╔═══██╗████╗ ████║██╔════╝██║     ██╔══██╗██╔══██╗
-███████║██║   ██║██╔████╔██║█████╗  ██║     ███████║██████╔╝
-██╔══██║██║   ██║██║╚██╔╝██║██╔══╝  ██║     ██╔══██║██╔══██╗
-██║  ██║╚██████╔╝██║ ╚═╝ ██║███████╗███████╗██║  ██║██║  ██║
-╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝
-
-          Homelab AIS — Ubuntu & Rocky • Automation • Security
-```
-
 <p align="center">
   <em>Un projet d’infrastructure Linux évolutif, documenté et orienté Apprentissage / AdminSys / Sécurité</em>
 </p>
