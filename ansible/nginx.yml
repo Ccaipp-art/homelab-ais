@@ -1,0 +1,5 @@
+- name: Déploiement Nginx sur Ubuntu
+  hosts: ubuntu
+  become: true
+  roles:
+    - nginx

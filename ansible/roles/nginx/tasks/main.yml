@@ -1,0 +1,92 @@
+- name: Installer Nginx
+  apt:
+    name: nginx
+    state: present
+    update_cache: true
+
+- name: Créer le dossier SSL
+  file:
+    path: "{{ nginx_ssl_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  when: nginx_enable_tls
+
+- name: Générer un certificat auto-signé (si absent)
+  command: >
+    openssl req -x509 -nodes -days 365
+    -newkey rsa:2048
+    -keyout {{ nginx_ssl_key }}
+    -out {{ nginx_ssl_cert }}
+    -subj "/CN={{ nginx_server_name }}"
+  args:
+    creates: "{{ nginx_ssl_cert }}"
+  when: nginx_enable_tls
+  notify: Recharger nginx
+
+- name: Déployer le snippet de headers
+  template:
+    src: security-headers.conf.j2
+    dest: /etc/nginx/snippets/security-headers.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Recharger nginx
+
+- name: Créer le dossier web root
+  file:
+    path: "{{ nginx_root }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: "0755"
+
+- name: Déployer une page index.html
+  copy:
+    dest: "{{ nginx_root }}/index.html"
+    owner: www-data
+    group: www-data
+    mode: "0644"
+    content: |
+      <!doctype html>
+      <html lang="fr">
+      <head>
+        <meta charset="utf-8">
+        <title>Homelab AIS - Nginx</title>
+      </head>
+      <body>
+        <h1>Nginx OK ✅</h1>
+        <p>Déployé via Ansible (role nginx).</p>
+      </body>
+      </html>
+
+- name: Déployer le vhost
+  template:
+    src: site.conf.j2
+    dest: "/etc/nginx/sites-available/{{ nginx_site_name }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Recharger nginx
+
+- name: Activer le site
+  file:
+    src: "/etc/nginx/sites-available/{{ nginx_site_name }}"
+    dest: "/etc/nginx/sites-enabled/{{ nginx_site_name }}"
+    state: link
+  notify: Recharger nginx
+
+- name: Désactiver le site default (optionnel mais propre)
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: Recharger nginx
+
+- name: Vérifier que nginx.conf inclut bien sites-enabled
+  command: grep -q "include /etc/nginx/sites-enabled" /etc/nginx/nginx.conf
+  changed_when: false
+
+- name: Vérifier la config Nginx
+  command: nginx -t
+  changed_when: false
