@@ -1,0 +1,18 @@
+# === Environnement local ===
+.vscode/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+
+# === Ansible - fichiers sensibles ===
+*.key
+*.pem
+*.crt
+
+# === Temporaires ===
+*.swp
+*.tmp
