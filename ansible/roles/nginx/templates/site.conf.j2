@@ -1,0 +1,36 @@
+server {
+    listen {{ nginx_http_port }};
+    server_name {{ nginx_server_name }};
+
+    {% if nginx_enable_tls %}
+    return 301 https://$host$request_uri;
+    {% else %}
+    root {{ nginx_root }};
+    index index.html;
+
+    include /etc/nginx/snippets/security-headers.conf;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+    {% endif %}
+}
+
+{% if nginx_enable_tls %}
+server {
+    listen {{ nginx_https_port }} ssl;
+    server_name {{ nginx_server_name }};
+
+    ssl_certificate     {{ nginx_ssl_cert }};
+    ssl_certificate_key {{ nginx_ssl_key }};
+
+    root {{ nginx_root }};
+    index index.html;
+
+    include /etc/nginx/snippets/security-headers.conf;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+{% endif %}

@@ -1,0 +1,11 @@
+nginx_site_name: "lab"
+nginx_server_name: "_"
+nginx_root: "/var/www/html"
+
+nginx_enable_tls: true
+nginx_ssl_dir: "/etc/nginx/ssl"
+nginx_ssl_cert: "{{ nginx_ssl_dir }}/{{ nginx_site_name }}.crt"
+nginx_ssl_key:  "{{ nginx_ssl_dir }}/{{ nginx_site_name }}.key"
+
+nginx_http_port: 80
+nginx_https_port: 443
