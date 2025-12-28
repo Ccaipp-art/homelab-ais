@@ -1,0 +1,12 @@
+---
+# Rôle security
+# Étape 1 : structure uniquement
+
+- name: Include UFW tasks
+  ansible.builtin.import_tasks: ufw.yml
+
+- name: Include SSH hardening tasks
+  ansible.builtin.import_tasks: ssh.yml
+
+- name: Include Fail2ban tasks
+  ansible.builtin.import_tasks: fail2ban.yml

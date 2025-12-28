@@ -1,0 +1,24 @@
+# Managed by Ansible - SSH hardening
+
+Port {{ security_ssh_port }}
+Protocol 2
+
+PermitRootLogin {{ security_ssh_permit_root_login }}
+PasswordAuthentication {{ security_ssh_password_authentication }}
+PubkeyAuthentication {{ security_ssh_pubkey_authentication }}
+KbdInteractiveAuthentication {{ security_ssh_kbd_interactive_authentication }}
+ChallengeResponseAuthentication {{ security_ssh_challenge_response_authentication }}
+
+X11Forwarding {{ security_ssh_x11_forwarding }}
+AllowTcpForwarding {{ security_ssh_allow_tcp_forwarding }}
+AllowAgentForwarding {{ security_ssh_agent_forwarding }}
+PermitTunnel {{ security_ssh_permit_tunnel }}
+
+MaxAuthTries {{ security_ssh_max_auth_tries }}
+LoginGraceTime {{ security_ssh_login_grace_time }}
+ClientAliveInterval {{ security_ssh_client_alive_interval }}
+ClientAliveCountMax {{ security_ssh_client_alive_count_max }}
+
+{% if security_ssh_allow_users is defined and security_ssh_allow_users|length > 0 %}
+AllowUsers {% for u in security_ssh_allow_users %}{{ u }} {% endfor %}
+{% endif %}
