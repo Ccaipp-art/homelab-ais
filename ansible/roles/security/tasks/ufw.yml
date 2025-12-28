@@ -1,0 +1,36 @@
+---
+- name: Install UFW
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+    update_cache: true
+
+# IMPORTANT : autoriser SSH avant enable, pour éviter tout lock-out
+- name: Allow SSH (always first)
+  community.general.ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+
+- name: Set default incoming policy
+  community.general.ufw:
+    direction: incoming
+    policy: "{{ security_ufw_default_incoming }}"
+
+- name: Set default outgoing policy
+  community.general.ufw:
+    direction: outgoing
+    policy: "{{ security_ufw_default_outgoing }}"
+
+- name: Allow required TCP ports (Nginx etc.)
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop: "{{ security_ufw_allow_tcp_ports }}"
+  when: item != 22  # déjà fait plus haut
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+  when: security_ufw_enabled

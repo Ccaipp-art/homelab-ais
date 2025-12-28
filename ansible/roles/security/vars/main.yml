@@ -1,0 +1,49 @@
+---
+security_ufw_enabled: true
+
+security_ufw_default_incoming: "deny"
+security_ufw_default_outgoing: "allow"
+
+# Ports à autoriser sur le serveur nginx
+security_ufw_allow_tcp_ports:
+  - 22    # SSH
+  - 80    # HTTP (Nginx)
+  - 443   # HTTPS (si tu l’utilises / certifs)
+
+# Optionnel : si tu veux restreindre SSH à ton réseau LAN (plus tard)
+# security_ufw_ssh_source: "192.168.38.0/24"
+
+# --- Fail2ban ---
+
+security_f2b_enabled: true
+
+security_f2b_bantime: 15m
+security_f2b_findtime: 10m
+security_f2b_maxretry: 5
+
+# IMPORTANT : ne jamais te bannir toi-même
+security_f2b_ignoreip:
+  - 127.0.0.1/8
+  - ::1
+  - 192.168.38.0/24
+
+# --- SSH hardening ---
+security_ssh_port: 22
+security_ssh_allow_users:
+  - svc-admin
+
+security_ssh_permit_root_login: "no"
+security_ssh_password_authentication: "no"
+security_ssh_pubkey_authentication: "yes"
+security_ssh_kbd_interactive_authentication: "no"
+security_ssh_challenge_response_authentication: "no"
+
+security_ssh_x11_forwarding: "no"
+security_ssh_allow_tcp_forwarding: "no"
+security_ssh_agent_forwarding: "no"
+security_ssh_permit_tunnel: "no"
+
+security_ssh_max_auth_tries: 3
+security_ssh_login_grace_time: "30s"
+security_ssh_client_alive_interval: 300
+security_ssh_client_alive_count_max: 2

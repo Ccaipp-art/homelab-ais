@@ -1,0 +1,5 @@
+- name: Apply security baseline
+  hosts: servers
+  become: true
+  roles:
+    - security
