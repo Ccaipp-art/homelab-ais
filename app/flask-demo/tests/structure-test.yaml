@@ -1,0 +1,26 @@
+schemaVersion: '2.0.0'
+
+metadataTest:
+  exposedPorts: ["5000"]
+  workdir: "/app"
+  user: "appuser"
+
+commandTests:
+  - name: "Python disponible"
+    command: "python"
+    args: ["--version"]
+    exitCode: 0
+
+  - name: "Flask importable"
+    command: "python"
+    args: ["-c", "import flask; print(flask.__version__)"]
+    exitCode: 0
+
+fileExistenceTests:
+  - name: "Application Flask présente"
+    path: "/app/app.py"
+    shouldExist: true
+
+  - name: "Requirements non présent dans runtime"
+    path: "/app/requirements.txt"
+    shouldExist: true 
